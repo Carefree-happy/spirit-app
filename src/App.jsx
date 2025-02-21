@@ -1,8 +1,8 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { View } from "react-native";
-import styles from "./App";  // ✅ 引入样式文件
+import { StyleSheet, View } from "react-native";
+
 import LandingPage from "./pages/LandingPage/LandingPage";
 import GenCharacter from "./pages/GenCharacter/GenCharacter";
 import GenFunny from "./pages/GenFunny/GenFunny";
@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.appContainer}>  // ✅ 确保 styles 正确引入
+    <View style={styles.appContainer}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Landing">
           <Stack.Screen name="Landing" component={LandingPage} />
@@ -24,3 +24,25 @@ export default function App() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  /* 顶层容器 */
+  appContainer: {
+      flex: 1,
+      flexDirection: "column", // React Native 不支持 `display: flex`，默认 `flexDirection: column`
+      backgroundColor: "#fff7e0",
+  },
+
+  /* 适配不同屏幕 */
+  responsiveContainer: {
+      flex: 1,
+  },
+
+  /* 主内容容器 */
+  mainContentContainer: {
+      flex: 1,
+      overflow: "hidden", // React Native 没有 `overflow-y: auto`
+      paddingHorizontal: 10,
+      paddingVertical: 10,
+  },
+});
