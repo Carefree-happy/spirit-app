@@ -9,7 +9,8 @@ import {
     Alert 
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser, registerUser } from '../../redux/authSlice';
+import { loginUser, registerUser, logoutUser } from '../../redux/authSlice';
+import { clearMessagesFromStorage } from '../../redux/characterChatSlice';
 
 const LoginForm = ({ navigation }) => {
     const [username, setUsername] = useState('');
@@ -40,6 +41,11 @@ const LoginForm = ({ navigation }) => {
         setPassword('');
     };
 
+    const handleLogout = async () => {
+        await dispatch(logoutUser());
+        await clearMessagesFromStorage();
+    };
+
     if (user) {
         return (
             <View style={styles.container}>
@@ -49,6 +55,12 @@ const LoginForm = ({ navigation }) => {
                     onPress={() => navigation.navigate('Chat')}
                 >
                     <Text style={styles.buttonText}>进入聊天</Text>
+                </TouchableOpacity>
+                <TouchableOpacity 
+                    style={[styles.button, styles.logoutButton]}
+                    onPress={handleLogout}
+                >
+                    <Text style={styles.buttonText}>退出登录</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -161,6 +173,10 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
+    },
+    logoutButton: {
+        marginTop: 10,
+        backgroundColor: '#FF3B30',
     },
 });
 

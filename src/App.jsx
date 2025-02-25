@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StyleSheet, View } from "react-native";
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import { loadUserFromStorage } from './redux/authSlice';
+import { loadMessagesFromStorage } from './redux/characterChatSlice';
 
 import LandingPage from "./pages/LandingPage/LandingPage";
 import GenCharacter from "./pages/GenCharacter/GenCharacter";
@@ -14,25 +16,37 @@ import LoginForm from './components/Auth/LoginForm';
 
 const Stack = createNativeStackNavigator();
 
+const AppContent = () => {
+  useEffect(() => {
+    // 加载本地存储的数据
+    store.dispatch(loadUserFromStorage());
+    store.dispatch(loadMessagesFromStorage());
+  }, []);
+
+  return (
+    <View style={styles.appContainer}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen 
+            name="Login" 
+            component={LoginForm}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen name="Landing" component={LandingPage} />
+          <Stack.Screen name="GenCharacter" component={GenCharacter} />
+          <Stack.Screen name="GenFunny" component={GenFunny} />
+          <Stack.Screen name="GenStory" component={GenStory} />
+          <Stack.Screen name="Chat" component={Chat} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </View>
+  );
+};
+
 export default function App() {
   return (
     <Provider store={store}>
-      <View style={styles.appContainer}>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName="Login">
-            <Stack.Screen 
-              name="Login" 
-              component={LoginForm}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen name="Landing" component={LandingPage} />
-            <Stack.Screen name="GenCharacter" component={GenCharacter} />
-            <Stack.Screen name="GenFunny" component={GenFunny} />
-            <Stack.Screen name="GenStory" component={GenStory} />
-            <Stack.Screen name="Chat" component={Chat} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </View>
+      <AppContent />
     </Provider>
   );
 }
