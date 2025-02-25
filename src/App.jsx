@@ -2,26 +2,38 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StyleSheet, View } from "react-native";
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 import LandingPage from "./pages/LandingPage/LandingPage";
 import GenCharacter from "./pages/GenCharacter/GenCharacter";
 import GenFunny from "./pages/GenFunny/GenFunny";
 import GenStory from "./pages/GenStory/GenStory";
+import Chat from "./components/Chat/Chat";
+import LoginForm from './components/Auth/LoginForm';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.appContainer}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Landing">
-          <Stack.Screen name="Landing" component={LandingPage} />
-          <Stack.Screen name="GenCharacter" component={GenCharacter} />
-          <Stack.Screen name="GenFunny" component={GenFunny} />
-          <Stack.Screen name="GenStory" component={GenStory} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </View>
+    <Provider store={store}>
+      <View style={styles.appContainer}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Login">
+            <Stack.Screen 
+              name="Login" 
+              component={LoginForm}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="Landing" component={LandingPage} />
+            <Stack.Screen name="GenCharacter" component={GenCharacter} />
+            <Stack.Screen name="GenFunny" component={GenFunny} />
+            <Stack.Screen name="GenStory" component={GenStory} />
+            <Stack.Screen name="Chat" component={Chat} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </View>
+    </Provider>
   );
 }
 
