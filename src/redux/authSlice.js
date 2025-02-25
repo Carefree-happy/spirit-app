@@ -1,34 +1,67 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export const loadUserFromStorage = () => {
+    try {
+        // 检查是否在浏览器环境
+        if (typeof window !== 'undefined' && window.localStorage) {
+            const serializedUser = localStorage.getItem('user');
+            if (serializedUser === null) {
+                return { type: 'auth/loadUser', payload: null };
+            }
+            return { type: 'auth/loadUser', payload: JSON.parse(serializedUser) };
+        }
+        return { type: 'auth/loadUser', payload: null };
+    } catch (err) {
+        console.error('Error loading user from storage:', err);
+        return { type: 'auth/loadUser', payload: null };
+    }
+};
 
 const authSlice = createSlice({
     name: "auth",
     initialState: {
         user: null,
-        isLoading: false,
+        isAuthenticated: false,
+        loading: true,
         error: null
     },
     reducers: {
+        loadUser: (state, action) => {
+            state.user = action.payload;
+            state.isAuthenticated = !!action.payload;
+            state.loading = false;
+        },
         loginStart: (state) => {
-            state.isLoading = true;
+            state.loading = true;
             state.error = null;
         },
         loginSuccess: (state, action) => {
-            state.isLoading = false;
+            state.loading = false;
             state.user = action.payload;
+            state.isAuthenticated = true;
             state.error = null;
         },
         loginFailure: (state, action) => {
-            state.isLoading = false;
+            state.loading = false;
             state.error = action.payload;
         },
         logout: (state) => {
             state.user = null;
+            state.isAuthenticated = false;
             state.error = null;
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(logoutUser.fulfilled, (state) => {
+            state.user = null;
+            state.error = null;
+            state.loading = false;
+        });
     }
 });
 
-export const { loginStart, loginSuccess, loginFailure, logout } = authSlice.actions;
+export const { loadUser, loginStart, loginSuccess, loginFailure, logout } = authSlice.actions;
 
 // 模拟登录请求
 export const loginUser = (username, password) => async (dispatch) => {
@@ -65,5 +98,14 @@ export const registerUser = (username, password) => async (dispatch) => {
         return false;
     }
 };
+
+export const logoutUser = createAsyncThunk(
+    'auth/logout',
+    async (_, { dispatch }) => {
+        // 清除本地存储的用户信息
+        await AsyncStorage.removeItem('user');
+        return null;
+    }
+);
 
 export default authSlice.reducer; 

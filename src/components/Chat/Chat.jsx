@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { addMessage } from '../../redux/characterChatSlice';
+import { loadUserFromStorage } from '../../redux/authSlice';
 
 const Chat = () => {
     const [inputText, setInputText] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const messages = useSelector(state => state.characterChat.messages);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        const action = loadUserFromStorage();
+        dispatch(action);
+    }, [dispatch]);
 
     const simulateResponse = async () => {
         setIsLoading(true);

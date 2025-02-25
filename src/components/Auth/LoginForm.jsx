@@ -31,7 +31,7 @@ const LoginForm = ({ navigation }) => {
 
         if (success) {
             // 登录成功后跳转到聊天页面
-            navigation.navigate('Chat');
+            navigation.navigate('Landing');
         }
     };
 
@@ -42,8 +42,20 @@ const LoginForm = ({ navigation }) => {
     };
 
     const handleLogout = async () => {
-        await dispatch(logoutUser());
-        await clearMessagesFromStorage();
+        try {
+            await dispatch(logoutUser());
+            await dispatch(clearMessagesFromStorage());
+            // 重置本地状态
+            setUsername('');
+            setPassword('');
+            setIsRegisterMode(false);
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Login' }],
+            });
+        } catch (error) {
+            Alert.alert('退出登录失败', error.message);
+        }
     };
 
     if (user) {
