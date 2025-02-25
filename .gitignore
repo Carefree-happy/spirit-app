@@ -36,3 +36,12 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+
+# lock files
+# git rm --cached package-lock.json
+# git rm --cached pnpm-lock.yaml
+# 如果这些文件已经在 Git 仓库中，它们的更改将不会被跟踪
+# 如果这些文件还没有被添加到 Git 仓库，它们将被完全忽略
+# 如果这些文件已经被 Git 跟踪，你可能需要先从 Git 缓存中删除它们
+package-lock.json
+pnpm-lock.yaml
