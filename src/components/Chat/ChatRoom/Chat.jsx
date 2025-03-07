@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { addMessage } from '../../redux/characterChatSlice';
-import { loadUserFromStorage } from '../../redux/authSlice';
+import { addMessage } from '../../../redux/characterChatSlice';
+import { loadUserFromStorage } from '../../../redux/authSlice';
 
-const Chat = () => {
+const Chat = ({ id }) => {
     const [inputText, setInputText] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const messages = useSelector(state => state.characterChat.messages);
+    const messages = useSelector(state => state.characterChat?.messages[id] || []);
     const dispatch = useDispatch();
 
     useEffect(() => {

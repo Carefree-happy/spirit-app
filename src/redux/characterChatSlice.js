@@ -8,9 +8,11 @@ const characterChatSlice = createSlice({
     },
     reducers: {
         setMessages: (state, action) => {
+            console.log('addMessage', state, action);
             state.messages = action.payload;
         },
         addMessage: (state, action) => {
+            console.log('addMessage', state, action);
             state.messages.push(action.payload);
             // 保存消息到本地存储
             saveMessagesToStorage(state.messages);

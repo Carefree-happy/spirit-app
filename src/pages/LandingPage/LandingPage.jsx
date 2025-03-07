@@ -8,7 +8,7 @@ const LandingPage = ({ navigation }) => {  // ✅ 改为 `export default`
       <Button title="Go to GenCharacter" onPress={() => navigation.navigate("GenCharacter")} />
       <Button title="Go to GenFunny" onPress={() => navigation.navigate("GenFunny")} />
       <Button title="Go to GenStory" onPress={() => navigation.navigate("GenStory")} />
-      <Button title="Go to Chat" onPress={() => navigation.navigate("Chat")} />
+      <Button title="Go to ChatList" onPress={() => navigation.navigate("ChatList")} />
     </View>
   );
 };

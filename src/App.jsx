@@ -11,14 +11,14 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import GenCharacter from "./pages/GenCharacter/GenCharacter";
 import GenFunny from "./pages/GenFunny/GenFunny";
 import GenStory from "./pages/GenStory/GenStory";
-import Chat from "./components/Chat/Chat";
 import LoginForm from './components/Auth/LoginForm';
+import ChatList from './components/Chat/ChatList/ChatList';
+import ChatRoom from './components/Chat/ChatRoom/ChatRoom';
 
 const Stack = createNativeStackNavigator();
 
 const AppContent = () => {
   useEffect(() => {
-    // 加载本地存储的数据
     store.dispatch(loadUserFromStorage());
     store.dispatch(loadMessagesFromStorage());
   }, []);
@@ -36,7 +36,14 @@ const AppContent = () => {
           <Stack.Screen name="GenCharacter" component={GenCharacter} />
           <Stack.Screen name="GenFunny" component={GenFunny} />
           <Stack.Screen name="GenStory" component={GenStory} />
-          <Stack.Screen name="Chat" component={Chat} />
+          <Stack.Screen name="ChatList" component={ChatList} />
+          <Stack.Screen 
+            name="ChatRoom" 
+            component={ChatRoom}
+            options={({ route }) => ({ 
+              title: route.params?.name || '聊天',
+            })}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

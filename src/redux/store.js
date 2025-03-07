@@ -1,11 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import characterChatReducer from "./characterChatSlice";
+import aiChatReducer from "./aiChatSlice";
+import groupChatReducer from "./groupChatSlice";
+import directChatReducer from "./directChatSlice";
 import authReducer from "./authSlice";
 
 const store = configureStore({
     reducer: {
-        characterChat: characterChatReducer,
         auth: authReducer,
+        aiChat: aiChatReducer,
+        groupChat: groupChatReducer,
+        directChat: directChatReducer,
     },
 });
 
