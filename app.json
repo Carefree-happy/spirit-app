@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "SpiritApp",
-    "slug": "SpiritApp",
+    "name": "SpiritAiApp",
+    "slug": "SpiritAiApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/coffee-icon.png",
@@ -14,13 +14,18 @@
       "backgroundColor": "#000000"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.bladesun.SpiritAiApp",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.bladesun.SpiritAiApp"
     },
     "web": {
       "bundler": "metro",
@@ -41,6 +46,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "39e1161e-b8cb-447f-bbf9-4859f8ccb9d1"
+      }
     }
   }
 }
