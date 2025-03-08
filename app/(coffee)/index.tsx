@@ -14,10 +14,10 @@ const app = () => {
       >
         <Text style={styles.text}>Coffee Shop</Text>
 
-        <Link style={styles.link} href="/explore" asChild>
+        <Link style={styles.link} href="/contact" asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>
-              Explore
+              Contact Us
             </Text>
           </Pressable>
         </Link>
