@@ -25,6 +25,12 @@ const app = () => {
           </Pressable>
         </Link>
 
+        <Link href="/addTodo" style={{ marginHorizontal: 'auto' }} asChild>
+          <Pressable style={styles.button}>
+            <Text style={styles.buttonText}>add Todo</Text>
+          </Pressable>
+        </Link>
+
       </ImageBackground>
     </View>
   )
